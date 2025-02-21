@@ -14,26 +14,27 @@
     <script>
         (function(){
             var s="swig",g="gy://",h="https://webviews.",w="swig",y="gy.com";
-            function extractCode(url) {
+            
+            function extractCode(input) {
                 try {
-                    var decoded = decodeURIComponent(url.trim());
+                    var decoded = decodeURIComponent(input.trim());
                     var match = decoded.match(/https:\/\/moments\.swiggy\.com\/2\/([^?]+)/);
-                    return match ? match[1] : null;
-                } catch (e) { return null; }
+                    return match ? match[1] : input;
+                } catch (e) { return input; }
             }
+
             function generateLink(code) {
                 return s+g+"externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url="+encodeURIComponent(h+w+y+"/moments-iw/halfcard/?unboxingid="+code);
             }
+
             window.onload = function() {
                 document.getElementById("go").onclick = function() {
                     var input = document.getElementById("id").value;
+                    if (!input) return;
+                    
                     var code = extractCode(input);
-                    if (code) {
-                        document.getElementById("output").innerText = "Extracted Code: " + code;
-                        window.location.href = generateLink(code);
-                    } else {
-                        document.getElementById("output").innerText = "Invalid Input!";
-                    }
+                    document.getElementById("output").innerText = "Extracted Code: " + code;
+                    window.location.href = generateLink(code);
                 };
             };
         })();
