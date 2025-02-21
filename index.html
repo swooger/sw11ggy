@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Force Open Swiggy</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        input, button { padding: 10px; font-size: 16px; margin: 5px; }
+        button { background-color: #ff6600; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h2>Enter Unboxing ID</h2>
+    <input type="text" id="unboxingId" placeholder="Enter ID" value="47iJ-I0u9kM">
+    <br>
+    <button onclick="forceOpenSwiggy()">Open in Swiggy</button>
+
+    <script>
+        function forceOpenSwiggy() {
+            var unboxingId = document.getElementById("unboxingId").value.trim();
+            if (!unboxingId) {
+                alert("Enter a valid Unboxing ID!");
+                return;
+            }
+
+            var swiggyDeepLink = "swiggy://externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url=" +
+                encodeURIComponent("https://webviews.swiggy.com/moments-iw/halfcard/?unboxingid=" + unboxingId);
+            
+            var fallbackWebUrl = "https://webviews.swiggy.com/moments-iw/halfcard/?unboxingid=" + unboxingId;
+
+            // Create an invisible iframe to force opening the app
+            var iframe = document.createElement("iframe");
+            iframe.style.display = "none";
+            iframe.src = swiggyDeepLink;
+            document.body.appendChild(iframe);
+
+            // Android Intent fallback (Forcing App Open)
+            var intentUrl = "intent://externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url=" +
+                encodeURIComponent("https://webviews.swiggy.com/moments-iw/halfcard/?unboxingid=" + unboxingId) +
+                "#Intent;scheme=swiggy;package=in.swiggy.android;end;";
+
+            setTimeout(function () {
+                window.location.href = intentUrl;
+            }, 1500); // Delay before fallback (1.5 sec)
+
+            // Web Fallback after 3 seconds
+            setTimeout(function () {
+                window.location.href = fallbackWebUrl;
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
