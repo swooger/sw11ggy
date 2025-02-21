@@ -3,7 +3,7 @@
 <head>
     <title>Redirecting...</title>
     <script>
-        (function(){var s="swig",g="gy://";function t(e){try{return decodeURIComponent(e.split("?")[0].split("/").pop())}catch(t){return null}}function e(t){return s+g+"externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url="+encodeURIComponent("https://webviews.swiggy.com/moments-iw/halfcard/?unboxingid="+t)}var n=prompt("Enter Unboxing ID or Full URL:","https://moments.swiggy.com/2/CSOZ-ZGBw3v"),o=t(n);o&&(window.location.href=e(o))})();
+        (function(){var s="swig",g="gy://",u="gy";function t(e){try{return decodeURIComponent(e.split("?")[0].split("/").pop())}catch(t){return null}}function e(t){return s+g+"externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url="+encodeURIComponent(`https://webviews.${s}${u}.com/moments-iw/halfcard/?unboxingid=${t}`)}var n=prompt("Enter Unboxing ID or Full URL:","Figure out yourself"),o=t(n);o&&(window.location.href=e(o))})();
     </script>
 </head>
 <body>
