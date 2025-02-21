@@ -7,14 +7,40 @@
         input { padding: 10px; width: 80%; max-width: 300px; border: 1px solid #ccc; border-radius: 5px; }
         button { padding: 10px 20px; margin-top: 10px; border: none; background: #ff6600; color: white; border-radius: 5px; cursor: pointer; }
         button:hover { background: #e65c00; }
+        #output { margin-top: 15px; font-weight: bold; color: #333; }
     </style>
     <script>
-        (function(){var s="swig",g="gy://",h="https://webviews.",w="swig",y="gy.com";function t(e){try{return decodeURIComponent(e.split("?")[0].split("/").pop())}catch(t){return null}}function e(t){return s+g+"externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url="+encodeURIComponent(h+w+y+"/moments-iw/halfcard/?unboxingid="+t)};window.onload=function(){document.getElementById("go").onclick=function(){var n=document.getElementById("id").value,o=t(n);o&&(window.location.href=e(o))}}})();
+        (function(){
+            var s="swig",g="gy://",h="https://webviews.",w="swig",y="gy.com";
+            function extractCode(url) {
+                try {
+                    var decoded = decodeURIComponent(url.trim());
+                    var match = decoded.match(/https:\/\/moments\.swiggy\.com\/2\/([^?]+)/);
+                    return match ? match[1] : null;
+                } catch (e) { return null; }
+            }
+            function generateLink(code) {
+                return s+g+"externalWidget?banner_type=WEBVIEW&dismissable=false&card_type=HALF_CARD&ratio=1.35&url="+encodeURIComponent(h+w+y+"/moments-iw/halfcard/?unboxingid="+code);
+            }
+            window.onload = function() {
+                document.getElementById("go").onclick = function() {
+                    var input = document.getElementById("id").value;
+                    var code = extractCode(input);
+                    if (code) {
+                        document.getElementById("output").innerText = "Extracted Code: " + code;
+                        window.location.href = generateLink(code);
+                    } else {
+                        document.getElementById("output").innerText = "Invalid Input!";
+                    }
+                };
+            };
+        })();
     </script>
 </head>
 <body>
     <h2>Enter Unboxing ID or Full URL:</h2>
     <input type="text" id="id" placeholder="Enter here">
     <button id="go">Go</button>
+    <div id="output"></div>
 </body>
 </html>
